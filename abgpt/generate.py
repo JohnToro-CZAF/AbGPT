@@ -18,6 +18,7 @@ def parse_args():
     parser.add_argument('--starting_residue', type=str, help='Starting residue for sequence generation')
     parser.add_argument('--num_seqs', type=int, help='Number of sequences to generate')
     parser.add_argument('--num_seqs_each_starting_residue', type=int, help='Number of sequences to generate for each starting residue')
+    parser.add_argument('--output_dir', type=str, help='Output directory')
     args = parser.parse_args()
     return args
 
@@ -114,13 +115,13 @@ def generate_specific_sequences(args):
         chain_type=args.chain_type,
         starting_residue=args.starting_residue
     )
-    output_dir = 'bcr_design'
+    output_dir = args.output_dir
     os.makedirs(output_dir, exist_ok=True)
     filename = os.path.join(output_dir, f'{args.chain_type}_{args.starting_residue}.txt')
     save_sequences(filename, sequences)
 
 def generate_bcr_library(args):
-    output_dir = 'bcr_library'
+    output_dir = args.output_dir
     os.makedirs(output_dir, exist_ok=True)
     combined_filename = os.path.join(output_dir, f'{args.chain_type}_BCR_library.txt')
     all_sequences = []
